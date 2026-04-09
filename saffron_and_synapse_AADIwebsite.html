@@ -1,0 +1,1188 @@
+
+<style>
+:root {
+  --saffron: #E8650A;
+  --saffron-light: #FFF3E8;
+  --saffron-mid: #F5A05A;
+  --green-india: #1A7A3C;
+  --green-light: #EAF5EE;
+  --white: #FFFEF9;
+  --navy: #1C2B4A;
+  --slate: #4A5568;
+  --muted: #718096;
+  --border: #E2E8F0;
+  --focus-ring: 0 0 0 3px rgba(232,101,10,0.4);
+  --font-head: 'Georgia', serif;
+  --font-body: 'Segoe UI', system-ui, sans-serif;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --fs-accessible: 1rem;
+}
+[data-hc="on"] {
+  --white: #000;
+  --navy: #fff;
+  --slate: #fff;
+  --muted: #eee;
+  --border: #fff;
+  --saffron-light: #1a0800;
+  --green-light: #001a08;
+  background: #000 !important;
+  color: #fff !important;
+}
+[data-hc="on"] .nav-bar { background: #111 !important; border-bottom: 2px solid #fff; }
+[data-hc="on"] .section-card, [data-hc="on"] .scheme-card, [data-hc="on"] .portal-card { background: #111 !important; border: 1.5px solid #fff !important; color: #fff !important; }
+[data-hc="on"] .hero { background: #1a0800 !important; }
+[data-hc="on"] .tag { background: #fff !important; color: #000 !important; }
+[data-hc="on"] a { color: #FFD700 !important; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); font-size: var(--fs-accessible); color: var(--navy); background: var(--white); line-height: 1.7; }
+
+.skip-link {
+  position: absolute; top: -100px; left: 8px; background: var(--saffron); color: #fff;
+  padding: 10px 18px; border-radius: 6px; font-weight: 600; text-decoration: none; z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 8px; }
+
+.a11y-bar {
+  background: var(--navy); color: #fff; padding: 6px 20px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.82rem;
+}
+.a11y-bar span { margin-right: 6px; font-weight: 500; opacity: 0.8; }
+.a11y-btn {
+  background: transparent; border: 1px solid rgba(255,255,255,0.4); color: #fff;
+  padding: 3px 11px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-family: inherit;
+  transition: background 0.15s;
+}
+.a11y-btn:hover, .a11y-btn:focus { background: rgba(255,255,255,0.15); outline: 2px solid #fff; }
+.a11y-bar .lang-toggle { margin-left: auto; display: flex; gap: 6px; }
+
+.nav-bar {
+  background: var(--white); border-bottom: 2px solid var(--border);
+  padding: 0 20px; position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.logo-wrap { display: flex; align-items: center; gap: 12px; padding: 10px 0; text-decoration: none; }
+.logo-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--saffron) 0%, #FF9933 50%, var(--green-india) 100%);
+  display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; flex-shrink: 0;
+}
+.logo-text { line-height: 1.2; }
+.logo-text strong { display: block; font-size: 1.05rem; color: var(--saffron); font-family: var(--font-head); }
+.logo-text small { font-size: 0.68rem; color: var(--muted); }
+
+.nav-links { display: flex; gap: 2px; list-style: none; flex-wrap: wrap; }
+.nav-links a {
+  display: block; padding: 8px 12px; font-size: 0.84rem; color: var(--slate); text-decoration: none;
+  border-radius: 6px; font-weight: 500; white-space: nowrap; transition: background 0.15s, color 0.15s;
+}
+.nav-links a:hover, .nav-links a:focus { background: var(--saffron-light); color: var(--saffron); }
+.nav-links a.active { color: var(--saffron); border-bottom: 2px solid var(--saffron); border-radius: 0; }
+
+.hamburger { display: none; background: none; border: 1.5px solid var(--border); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 18px; color: var(--navy); }
+
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.hero {
+  background: linear-gradient(135deg, var(--saffron-light) 0%, #fff8f0 50%, var(--green-light) 100%);
+  padding: 60px 20px 50px; text-align: center;
+}
+.hero-badge {
+  display: inline-block; background: var(--saffron); color: #fff;
+  padding: 5px 16px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px;
+}
+.hero h1 { font-family: var(--font-head); font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--navy); margin-bottom: 12px; line-height: 1.25; }
+.hero h1 span { color: var(--saffron); }
+.hero p { font-size: 1.05rem; color: var(--slate); max-width: 620px; margin: 0 auto 28px; }
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--saffron); color: #fff; padding: 12px 26px; border-radius: 8px;
+  font-weight: 600; font-size: 0.95rem; text-decoration: none; border: none; cursor: pointer;
+  transition: background 0.15s, transform 0.1s; font-family: inherit;
+}
+.btn-primary:hover, .btn-primary:focus { background: #c45500; transform: translateY(-1px); outline: 3px solid var(--saffron); outline-offset: 2px; }
+.btn-secondary {
+  background: var(--white); color: var(--green-india); padding: 12px 26px; border-radius: 8px;
+  font-weight: 600; font-size: 0.95rem; text-decoration: none; border: 2px solid var(--green-india);
+  cursor: pointer; transition: all 0.15s; font-family: inherit;
+}
+.btn-secondary:hover, .btn-secondary:focus { background: var(--green-light); outline: 3px solid var(--green-india); outline-offset: 2px; }
+
+.tricolor-bar { height: 5px; background: linear-gradient(to right, #FF9933 33.33%, #fff 33.33% 66.66%, #138808 66.66%); }
+
+.section-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+.section-title { font-family: var(--font-head); font-size: 1.5rem; color: var(--navy); margin-bottom: 6px; }
+.section-subtitle { color: var(--muted); font-size: 0.92rem; margin-bottom: 28px; }
+
+.quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 40px; }
+.quick-card {
+  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 20px 16px; text-align: center; cursor: pointer; transition: all 0.15s;
+  text-decoration: none; color: inherit; display: block;
+}
+.quick-card:hover, .quick-card:focus { border-color: var(--saffron); box-shadow: 0 4px 20px rgba(232,101,10,0.12); transform: translateY(-2px); outline: none; }
+.quick-card:focus-visible { outline: 3px solid var(--saffron); outline-offset: 3px; }
+.quick-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+.quick-label { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
+.quick-desc { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+.stats-band { background: var(--navy); color: #fff; padding: 28px 20px; }
+.stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; text-align: center; }
+.stat-num { font-size: 2rem; font-weight: 700; color: var(--saffron-mid); font-family: var(--font-head); }
+.stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+.section-card {
+  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-lg);
+  padding: 24px; margin-bottom: 20px;
+}
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.card-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.card-icon.orange { background: var(--saffron-light); }
+.card-icon.green { background: var(--green-light); }
+.card-icon.blue { background: #EBF4FF; }
+.card-icon.purple { background: #F3EFFE; }
+.card-title { font-size: 1.05rem; font-weight: 700; color: var(--navy); }
+.card-subtitle { font-size: 0.8rem; color: var(--muted); }
+
+.tag { display: inline-block; background: var(--saffron-light); color: var(--saffron); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin: 3px 2px; }
+.tag.green { background: var(--green-light); color: var(--green-india); }
+.tag.blue { background: #EBF4FF; color: #1A56DB; }
+.tag.gray { background: #F7FAFC; color: var(--slate); }
+
+.scheme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.scheme-card {
+  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 20px; transition: border-color 0.15s, box-shadow 0.15s;
+}
+.scheme-card:hover { border-color: var(--saffron); box-shadow: 0 4px 16px rgba(232,101,10,0.1); }
+.scheme-name { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 6px; }
+.scheme-desc { font-size: 0.83rem; color: var(--slate); line-height: 1.6; }
+.scheme-link { display: inline-block; margin-top: 10px; font-size: 0.8rem; color: var(--saffron); font-weight: 600; text-decoration: none; }
+.scheme-link:hover { text-decoration: underline; }
+
+.portal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.portal-card {
+  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 18px; display: flex; gap: 14px; align-items: flex-start;
+  transition: border-color 0.15s; text-decoration: none; color: inherit;
+}
+.portal-card:hover { border-color: var(--green-india); }
+.portal-logo { width: 38px; height: 38px; border-radius: 8px; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.portal-name { font-weight: 700; font-size: 0.88rem; color: var(--navy); }
+.portal-url { font-size: 0.75rem; color: var(--saffron); }
+.portal-desc { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+.rights-accordion { border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; }
+.acc-head {
+  width: 100%; background: var(--white); border: none; padding: 16px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.95rem; font-weight: 700; color: var(--navy); cursor: pointer; font-family: inherit;
+  text-align: left; transition: background 0.15s;
+}
+.acc-head:hover, .acc-head:focus { background: var(--saffron-light); outline: none; }
+.acc-head:focus-visible { box-shadow: inset 0 0 0 3px var(--saffron); }
+.acc-arrow { font-size: 0.8rem; color: var(--muted); transition: transform 0.2s; }
+.acc-body { display: none; padding: 0 20px 18px; font-size: 0.88rem; color: var(--slate); line-height: 1.8; border-top: 1px solid var(--border); background: var(--white); }
+.acc-body.open { display: block; }
+.acc-head[aria-expanded="true"] .acc-arrow { transform: rotate(180deg); }
+.acc-body ul { padding-left: 18px; }
+.acc-body li { margin-bottom: 6px; }
+
+.disability-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.dis-card {
+  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 18px 16px; text-align: center;
+}
+.dis-icon { font-size: 30px; margin-bottom: 10px; }
+.dis-name { font-weight: 700; color: var(--navy); font-size: 0.9rem; margin-bottom: 6px; }
+.dis-desc { font-size: 0.78rem; color: var(--slate); }
+
+.helpline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.helpline-card {
+  background: var(--green-light); border: 1.5px solid #b8e0c8; border-radius: var(--radius); padding: 18px;
+  display: flex; gap: 14px; align-items: center;
+}
+.helpline-number { font-size: 1.5rem; font-weight: 700; color: var(--green-india); }
+.helpline-name { font-weight: 600; color: var(--navy); font-size: 0.88rem; }
+.helpline-desc { font-size: 0.76rem; color: var(--slate); }
+
+.news-item { border-left: 4px solid var(--saffron); padding: 12px 0 12px 18px; margin-bottom: 16px; }
+.news-date { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.news-title { font-weight: 700; color: var(--navy); font-size: 0.92rem; margin: 4px 0; }
+.news-tag { display: inline-block; background: var(--saffron-light); color: var(--saffron); font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 12px; }
+
+.contact-form-wrap { max-width: 560px; }
+.form-group { margin-bottom: 18px; }
+.form-label { display: block; font-weight: 600; font-size: 0.88rem; color: var(--navy); margin-bottom: 6px; }
+.form-input, .form-select, .form-textarea {
+  width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 0.9rem; font-family: inherit; color: var(--navy); background: var(--white);
+  transition: border-color 0.15s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--saffron); box-shadow: var(--focus-ring); outline: none; }
+.form-textarea { resize: vertical; min-height: 110px; }
+.form-submitted { background: var(--green-light); border: 1.5px solid #b8e0c8; border-radius: var(--radius); padding: 18px; display: none; }
+.form-submitted.visible { display: block; }
+
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.about-highlight { background: linear-gradient(135deg, var(--saffron-light), var(--green-light)); border-radius: var(--radius-lg); padding: 28px; }
+.about-quote { font-size: 1.1rem; font-family: var(--font-head); color: var(--navy); line-height: 1.6; font-style: italic; }
+.about-attr { font-size: 0.82rem; color: var(--muted); margin-top: 10px; font-style: normal; }
+
+.breadcrumb { font-size: 0.8rem; color: var(--muted); margin-bottom: 20px; }
+.breadcrumb a { color: var(--saffron); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+.footer {
+  background: var(--navy); color: rgba(255,255,255,0.85); padding: 40px 20px 20px;
+  font-size: 0.83rem;
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 30px; }
+.footer-brand strong { font-size: 1rem; color: var(--saffron-mid); font-family: var(--font-head); }
+.footer-brand p { color: rgba(255,255,255,0.6); margin-top: 8px; font-size: 0.8rem; line-height: 1.7; }
+.footer-col h4 { color: #fff; font-size: 0.88rem; margin-bottom: 12px; }
+.footer-col a { display: block; color: rgba(255,255,255,0.65); text-decoration: none; margin-bottom: 7px; font-size: 0.8rem; transition: color 0.15s; }
+.footer-col a:hover { color: var(--saffron-mid); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,0.45); font-size: 0.75rem; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+.lang-hi { display: none; }
+[data-lang="hi"] .lang-en { display: none; }
+[data-lang="hi"] .lang-hi { display: inline; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--white); border-bottom: 2px solid var(--border); padding: 10px; z-index: 200; }
+  .hamburger { display: block; }
+  .nav-bar { position: relative; }
+  .about-grid, .footer-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .quick-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<h2 class="sr-only">Saffron And Synapse — Disability Rights & Resources Platform for India</h2>
+
+<div id="root-wrap" data-hc="off" data-lang="en">
+
+<div class="a11y-bar" role="toolbar" aria-label="Accessibility tools">
+  <span>Accessibility:</span>
+  <button class="a11y-btn" onclick="changeFontSize(-1)" aria-label="Decrease font size">A-</button>
+  <button class="a11y-btn" onclick="changeFontSize(1)" aria-label="Increase font size">A+</button>
+  <button class="a11y-btn" onclick="toggleContrast()" id="hc-btn" aria-label="Toggle high contrast mode">High Contrast</button>
+  <button class="a11y-btn" onclick="readPageAloud()" aria-label="Read page aloud">&#9654; Read Aloud</button>
+  <div class="lang-toggle" role="group" aria-label="Language selection">
+    <button class="a11y-btn" onclick="setLang('en')" aria-label="Switch to English" aria-pressed="true" id="btn-en">EN</button>
+    <button class="a11y-btn" onclick="setLang('hi')" aria-label="हिंदी में बदलें" id="btn-hi">हिं</button>
+  </div>
+</div>
+
+<nav class="nav-bar" role="navigation" aria-label="Main navigation">
+  <a href="#" class="logo-wrap" onclick="showPage('home')" aria-label="Saffron And Synapse - Home">
+    <div class="logo-icon" aria-hidden="true">&#9741;</div>
+    <div class="logo-text">
+      <strong>Saffron And Synapse</strong>
+      <small>Empowering Abilities. Connecting Rights.</small>
+    </div>
+  </a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false" id="hamburger">&#9776;</button>
+  <ul class="nav-links" id="nav-links" role="list">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active" aria-current="page">Home</a></li>
+    <li><a href="#" onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a href="#" onclick="showPage('disabilities')" id="nav-disabilities">Disability Types</a></li>
+    <li><a href="#" onclick="showPage('rights')" id="nav-rights">Rights & Laws</a></li>
+    <li><a href="#" onclick="showPage('schemes')" id="nav-schemes">Schemes</a></li>
+    <li><a href="#" onclick="showPage('portals')" id="nav-portals">Gov. Portals</a></li>
+    <li><a href="#" onclick="showPage('education')" id="nav-education">Education & Jobs</a></li>
+    <li><a href="#" onclick="showPage('health')" id="nav-health">Health</a></li>
+    <li><a href="#" onclick="showPage('news')" id="nav-news">News</a></li>
+    <li><a href="#" onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="main-content">
+
+<div id="page-home" class="page active" role="main" aria-label="Home page">
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-badge" aria-label="Platform type">One-Stop Disability Resource Platform</div>
+    <h1 id="hero-heading">
+      <span class="lang-en">Rights, Schemes & Services for<br><span style="color:var(--green-india)">Persons with Disabilities</span> in India</span>
+      <span class="lang-hi">भारत में दिव्यांगजनों के लिए<br><span style="color:var(--green-india)">अधिकार, योजनाएं और सेवाएं</span></span>
+    </h1>
+    <p class="lang-en">Accurate. Updated. Accessible. A trusted platform connecting PwDs, caregivers, educators and policymakers to India's disability ecosystem.</p>
+    <p class="lang-hi">सटीक। अद्यतन। सुलभ। दिव्यांगजनों, देखभालकर्ताओं, शिक्षकों और नीति निर्माताओं को जोड़ने वाला विश्वसनीय मंच।</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('schemes')" aria-label="Explore government schemes for persons with disabilities">
+        <span class="lang-en">Explore Schemes</span><span class="lang-hi">योजनाएं देखें</span>
+      </button>
+      <button class="btn-secondary" onclick="showPage('rights')" aria-label="Know your legal rights under RPwD Act">
+        <span class="lang-en">Know Your Rights</span><span class="lang-hi">अपने अधिकार जानें</span>
+      </button>
+    </div>
+  </section>
+  <div class="tricolor-bar" role="presentation"></div>
+
+  <section class="stats-band" aria-label="Key statistics about disability in India">
+    <div class="stats-inner">
+      <div><div class="stat-num">2.68 Cr</div><div class="stat-label">PwDs in India (Census 2011)</div></div>
+      <div><div class="stat-num">21</div><div class="stat-label">Disability types under RPwD Act 2016</div></div>
+      <div><div class="stat-num">4%</div><div class="stat-label">Reservation in govt. jobs</div></div>
+      <div><div class="stat-num">100+</div><div class="stat-label">Central & state schemes</div></div>
+      <div><div class="stat-num">2016</div><div class="stat-label">Rights of Persons with Disabilities Act</div></div>
+    </div>
+  </section>
+
+  <div class="section-wrap">
+    <h2 class="section-title">Quick Access</h2>
+    <p class="section-subtitle">Jump directly to what you need</p>
+    <nav class="quick-grid" aria-label="Quick access navigation">
+      <a class="quick-card" href="#" onclick="showPage('schemes')" role="link" aria-label="Government Schemes - Pensions, scholarships and welfare">
+        <span class="quick-icon" aria-hidden="true">&#128203;</span>
+        <div class="quick-label">Govt. Schemes</div>
+        <div class="quick-desc">Pensions, scholarships & welfare</div>
+      </a>
+      <a class="quick-card" href="#" onclick="showPage('rights')" role="link" aria-label="Rights and Laws - RPwD Act, Constitution and UNCRPD">
+        <span class="quick-icon" aria-hidden="true">&#9878;</span>
+        <div class="quick-label">Rights & Laws</div>
+        <div class="quick-desc">RPwD Act, Constitution, UNCRPD</div>
+      </a>
+      <a class="quick-card" href="#" onclick="showPage('disabilities')" role="link" aria-label="Disability Categories under RPwD Act 2016">
+        <span class="quick-icon" aria-hidden="true">&#9997;</span>
+        <div class="quick-label">Disability Types</div>
+        <div class="quick-desc">21 categories under RPwD Act</div>
+      </a>
+      <a class="quick-card" href="#" onclick="showPage('portals')" role="link" aria-label="Official Government Portals including UDID and more">
+        <span class="quick-icon" aria-hidden="true">&#127760;</span>
+        <div class="quick-label">Gov. Portals</div>
+        <div class="quick-desc">UDID, DEPWD, National Trust</div>
+      </a>
+      <a class="quick-card" href="#" onclick="showPage('education')" role="link" aria-label="Education and Employment - Scholarships and job reservations">
+        <span class="quick-icon" aria-hidden="true">&#127979;</span>
+        <div class="quick-label">Education & Jobs</div>
+        <div class="quick-desc">Scholarships, reservations</div>
+      </a>
+      <a class="quick-card" href="#" onclick="showPage('health')" role="link" aria-label="Health and Rehabilitation - Hospitals and assistive devices">
+        <span class="quick-icon" aria-hidden="true">&#9763;</span>
+        <div class="quick-label">Health & Rehab</div>
+        <div class="quick-desc">Hospitals, assistive devices</div>
+      </a>
+      <a class="quick-card" href="#" onclick="showPage('news')" role="link" aria-label="News and Policy Updates">
+        <span class="quick-icon" aria-hidden="true">&#128240;</span>
+        <div class="quick-label">News & Updates</div>
+        <div class="quick-desc">Policy & court updates</div>
+      </a>
+      <a class="quick-card" href="#" onclick="showPage('contact')" role="link" aria-label="Contact and Helplines">
+        <span class="quick-icon" aria-hidden="true">&#128222;</span>
+        <div class="quick-label">Helplines</div>
+        <div class="quick-desc">Emergency & grievance</div>
+      </a>
+    </nav>
+
+    <div class="section-card" style="background:linear-gradient(135deg,var(--saffron-light),var(--green-light));border-color:#e0c4a0;">
+      <div class="card-header">
+        <div class="card-icon orange" aria-hidden="true">&#128161;</div>
+        <div>
+          <div class="card-title">Featured: UDID — Unique Disability ID</div>
+          <div class="card-subtitle">Apply for your disability certificate digitally</div>
+        </div>
+      </div>
+      <p style="font-size:0.88rem;color:var(--slate);margin-bottom:14px;">The Unique Disability ID (UDID) card is mandatory for availing most government benefits. Apply online at <strong>swavlambancard.gov.in</strong> with a medical certificate from a government hospital.</p>
+      <div>
+        <span class="tag">Apply Online</span>
+        <span class="tag green">No Fee</span>
+        <span class="tag blue">All 21 Disabilities</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-about" class="page" role="main" aria-label="About page">
+  <div class="section-wrap">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> &rsaquo; About Us</div>
+    <h1 class="section-title" style="font-size:1.8rem;margin-bottom:20px;">About Saffron And Synapse</h1>
+    <div class="about-grid" style="margin-bottom:28px;">
+      <div>
+        <div class="about-highlight">
+          <p class="about-quote">"Empowering Abilities. Connecting Rights, Services &amp; Opportunities in India."</p>
+          <p class="about-attr">— Mission of Saffron And Synapse</p>
+        </div>
+        <div class="section-card" style="margin-top:18px;">
+          <h2 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:10px;">What does our name mean?</h2>
+          <p style="font-size:0.88rem;color:var(--slate);">
+            <strong>Saffron</strong> — Drawn from India's identity, saffron symbolises warmth, courage and vitality. It honours the richness of our diversity and the strength of every individual. <br><br>
+            <strong>Synapse</strong> — The junction in the nervous system that connects and transmits. Here, it represents the bridge between people, policies, services and opportunities — a living connection for inclusion.
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class="section-card">
+          <h2 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:12px;">Our Vision</h2>
+          <ul style="padding-left:18px;font-size:0.88rem;color:var(--slate);line-height:2;">
+            <li>An India where every person with a disability can live with full dignity and equal opportunity</li>
+            <li>A society that is inclusive by design and equitable in practice</li>
+            <li>Digital accessibility that leaves no one behind</li>
+            <li>Informed communities — PwDs, caregivers, educators and policymakers — working together</li>
+          </ul>
+        </div>
+        <div class="section-card" style="margin-top:14px;">
+          <h2 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:10px;">Constitutional Context</h2>
+          <p style="font-size:0.88rem;color:var(--slate);">The Constitution of India guarantees equality (Articles 14–16), right against discrimination, and the State's duty to make special provisions for vulnerable sections (Article 41, DPSP). India ratified the UN Convention on the Rights of Persons with Disabilities (UNCRPD) in 2007, leading to the landmark RPwD Act 2016.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section-card" style="background:var(--saffron-light);border-color:#e0c4a0;">
+      <h2 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px;">Who We Serve</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">
+        <span class="tag">Persons with Disabilities</span>
+        <span class="tag green">Parents & Caregivers</span>
+        <span class="tag blue">Teachers & Special Educators</span>
+        <span class="tag">Students</span>
+        <span class="tag green">NGOs & Social Workers</span>
+        <span class="tag blue">Researchers & Policymakers</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-disabilities" class="page" role="main" aria-label="Disability categories page">
+  <div class="section-wrap">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> &rsaquo; Disability Categories</div>
+    <h1 class="section-title" style="font-size:1.8rem;margin-bottom:6px;">Disability Categories in India</h1>
+    <p class="section-subtitle">As defined under the Rights of Persons with Disabilities Act, 2016 — 21 specified disabilities</p>
+
+    <div class="section-card" style="background:var(--saffron-light);border-color:#e0c4a0;margin-bottom:24px;">
+      <p style="font-size:0.88rem;color:var(--slate);">The RPwD Act 2016 expanded the list from 7 to <strong>21 categories</strong> of disabilities, adopting a rights-based approach aligned with UNCRPD. Any person with at least <strong>40% benchmark disability</strong> is entitled to rights and benefits under this Act.</p>
+    </div>
+
+    <div class="disability-grid">
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#128065;</div><div class="dis-name">Blindness</div><div class="dis-desc">Complete absence of sight or light perception</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#128274;</div><div class="dis-name">Low Vision</div><div class="dis-desc">Reduced visual acuity not correctable by glasses</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#128263;</div><div class="dis-name">Deaf & Hard of Hearing</div><div class="dis-desc">Hearing loss of 60 dB or more in better ear</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129498;</div><div class="dis-name">Locomotor Disability</div><div class="dis-desc">Bone, joint or muscle disorders affecting movement</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129504;</div><div class="dis-name">Cerebral Palsy</div><div class="dis-desc">Group of disorders affecting movement and posture</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129505;</div><div class="dis-name">Intellectual Disability</div><div class="dis-desc">Significant limitations in intellectual functioning</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#127752;</div><div class="dis-name">Autism Spectrum Disorder</div><div class="dis-desc">Neurodevelopmental condition affecting communication</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129514;</div><div class="dis-name">Mental Illness</div><div class="dis-desc">Substantial disorder of thinking, mood or behaviour</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129488;</div><div class="dis-name">Deaf-Blindness</div><div class="dis-desc">Combination of hearing and visual impairments</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#127774;</div><div class="dis-name">Leprosy Cured</div><div class="dis-desc">Persons who have been cured of leprosy</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129467;</div><div class="dis-name">Dwarfism</div><div class="dis-desc">Medical or genetic condition of short stature</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129493;</div><div class="dis-name">Acid Attack Survivor</div><div class="dis-desc">Disfigurement due to acid attack</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129514;</div><div class="dis-name">Specific Learning Disabilities</div><div class="dis-desc">Dyslexia, dyscalculia, dysgraphia and related conditions</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129504;</div><div class="dis-name">Multiple Sclerosis</div><div class="dis-desc">Chronic disease affecting the nervous system</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129489;</div><div class="dis-name">Parkinson's Disease</div><div class="dis-desc">Neurodegenerative disorder causing tremors</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#128167;</div><div class="dis-name">Haemophilia</div><div class="dis-desc">Inherited blood clotting disorder</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#129503;</div><div class="dis-name">Thalassemia</div><div class="dis-desc">Blood disorder affecting haemoglobin production</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#9763;</div><div class="dis-name">Sickle Cell Disease</div><div class="dis-desc">Inherited red blood cell disorder</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#128722;</div><div class="dis-name">Muscular Dystrophy</div><div class="dis-desc">Group of genetic disorders causing muscle weakness</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#9757;</div><div class="dis-name">Chronic Neurological Conditions</div><div class="dis-desc">Long-term conditions of the nervous system</div></div>
+      <div class="dis-card"><div class="dis-icon" aria-hidden="true">&#128203;</div><div class="dis-name">Multiple Disabilities</div><div class="dis-desc">Combination of two or more of the above categories</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-rights" class="page" role="main" aria-label="Rights and Laws page">
+  <div class="section-wrap">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> &rsaquo; Rights &amp; Laws</div>
+    <h1 class="section-title" style="font-size:1.8rem;margin-bottom:6px;">Rights &amp; Legal Framework</h1>
+    <p class="section-subtitle">India's constitutional, legislative and international commitments to disability rights</p>
+
+    <div class="rights-accordion" role="region" aria-label="Rights of Persons with Disabilities Act 2016">
+      <button class="acc-head" aria-expanded="true" onclick="toggleAcc(this)">
+        RPwD Act, 2016 — Key Provisions <span class="acc-arrow" aria-hidden="true">&#9660;</span>
+      </button>
+      <div class="acc-body open">
+        <ul>
+          <li><strong>Section 3:</strong> Right to equality, non-discrimination and equal opportunity</li>
+          <li><strong>Section 16–17:</strong> Inclusive education — government educational institutions must provide free and inclusive education to children with disabilities up to age 18</li>
+          <li><strong>Section 20:</strong> Government establishments must provide 4% reservation to persons with benchmark disabilities in vacancies</li>
+          <li><strong>Section 24:</strong> Reasonable accommodation in workplaces — employers must make adjustments</li>
+          <li><strong>Section 40–46:</strong> Accessibility standards for the built environment, transport and information</li>
+          <li><strong>Section 72:</strong> Establishment of State Disability Commissioner to redress grievances</li>
+          <li><strong>Schedule:</strong> Lists all 21 specified disabilities</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rights-accordion" role="region" aria-label="Constitutional Provisions">
+      <button class="acc-head" aria-expanded="false" onclick="toggleAcc(this)">
+        Constitutional Provisions <span class="acc-arrow" aria-hidden="true">&#9660;</span>
+      </button>
+      <div class="acc-body">
+        <ul>
+          <li><strong>Article 14:</strong> Right to Equality — no person shall be denied equality before law</li>
+          <li><strong>Article 15(1):</strong> Prohibition of discrimination based on any ground</li>
+          <li><strong>Article 16:</strong> Equal opportunity in public employment</li>
+          <li><strong>Article 21:</strong> Right to life with dignity — interpreted to include right to live with dignity for PwDs</li>
+          <li><strong>Article 41 (DPSP):</strong> State shall make effective provision for securing right to work, education and public assistance in cases of disablement</li>
+          <li><strong>Article 46 (DPSP):</strong> State to promote educational and economic interests of weaker sections</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rights-accordion" role="region" aria-label="UNCRPD and India">
+      <button class="acc-head" aria-expanded="false" onclick="toggleAcc(this)">
+        UNCRPD — India's International Commitment <span class="acc-arrow" aria-hidden="true">&#9660;</span>
+      </button>
+      <div class="acc-body">
+        <p>India ratified the UN Convention on the Rights of Persons with Disabilities (UNCRPD) in October 2007, committing to a rights-based approach to disability. Key UNCRPD principles reflected in Indian law:</p>
+        <ul>
+          <li>Respect for inherent dignity and individual autonomy</li>
+          <li>Non-discrimination and full and effective participation</li>
+          <li>Respect for difference and acceptance of PwDs as part of human diversity</li>
+          <li>Equality of opportunity and accessibility</li>
+          <li>Equality between men and women with disabilities</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rights-accordion" role="region" aria-label="Reservation rights">
+      <button class="acc-head" aria-expanded="false" onclick="toggleAcc(this)">
+        Reservation &amp; Entitlements <span class="acc-arrow" aria-hidden="true">&#9660;</span>
+      </button>
+      <div class="acc-body">
+        <ul>
+          <li><strong>4% reservation</strong> in all government jobs (Group A, B, C, D)</li>
+          <li><strong>5% reservation</strong> in higher educational institutions (many states)</li>
+          <li>Reservation in housing allocation by government authorities</li>
+          <li><strong>Age relaxation:</strong> 10 years (General), 13 years (OBC), 15 years (SC/ST) in govt. exams</li>
+          <li>Concessions in railway travel, airline tickets and bus services</li>
+          <li>Priority in passport, banking and other services</li>
+          <li>Tax benefits under Income Tax Act (Section 80DD, 80DDB, 80U)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-schemes" class="page" role="main" aria-label="Government Schemes page">
+  <div class="section-wrap">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> &rsaquo; Government Schemes</div>
+    <h1 class="section-title" style="font-size:1.8rem;margin-bottom:6px;">Government Schemes &amp; Services</h1>
+    <p class="section-subtitle">Central and state government welfare programmes for Persons with Disabilities</p>
+
+    <h2 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:14px;">Central Government Schemes</h2>
+    <div class="scheme-grid">
+      <div class="scheme-card">
+        <div class="scheme-name">ADIP Scheme</div>
+        <div><span class="tag">Assistive Devices</span></div>
+        <div class="scheme-desc">Assistance to Disabled Persons for purchase/fitting of Aids and Appliances — provides free aids like wheelchairs, crutches, hearing aids, braille kits to PwDs with income ≤Rs 20,000/month.</div>
+        <a href="#" class="scheme-link" aria-label="Learn more about ADIP Scheme">Learn more &#8594;</a>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">Deendayal Disabled Rehabilitation Scheme (DDRS)</div>
+        <div><span class="tag green">Rehabilitation</span></div>
+        <div class="scheme-desc">Provides grants to NGOs for projects promoting education, vocational training and rehabilitation of PwDs across India.</div>
+        <a href="#" class="scheme-link">Learn more &#8594;</a>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">National Scholarship for PwDs</div>
+        <div><span class="tag blue">Education</span></div>
+        <div class="scheme-desc">Pre-matric, post-matric and top-class education scholarships for students with disabilities from families with annual income below Rs 2.5 lakh.</div>
+        <a href="#" class="scheme-link">Learn more &#8594;</a>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">NHFDC Credit Schemes</div>
+        <div><span class="tag">Finance</span></div>
+        <div class="scheme-desc">National Handicapped Finance and Development Corporation provides low-interest loans for self-employment, education and livelihood activities of PwDs.</div>
+        <a href="#" class="scheme-link">Learn more &#8594;</a>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">Accessible India Campaign (Sugamya Bharat)</div>
+        <div><span class="tag green">Accessibility</span></div>
+        <div class="scheme-desc">National campaign to make built environments, transport and digital/ICT ecosystem fully accessible for PwDs across India.</div>
+        <a href="#" class="scheme-link">Learn more &#8594;</a>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">PM-DAKSH Scheme</div>
+        <div><span class="tag blue">Skill Development</span></div>
+        <div class="scheme-desc">PM Dakshta Aur Kushalta Sampann Hitgrahi — skill development scheme covering persons with disabilities for short-term and long-term training programs.</div>
+        <a href="#" class="scheme-link">Learn more &#8594;</a>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">SIPDA</div>
+        <div><span class="tag">Infrastructure</span></div>
+        <div class="scheme-desc">Scheme for Implementation of Persons with Disabilities Act — funds state governments for enforcement of accessibility standards in public places.</div>
+        <a href="#" class="scheme-link">Learn more &#8594;</a>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">National Trust Schemes</div>
+        <div><span class="tag green">Care & Support</span></div>
+        <div class="scheme-desc">Niramaya (health insurance), Gharaunda (group homes), Sambhav (employment), Samarth (caregiver training) for persons with autism, cerebral palsy, intellectual disabilities and multiple disabilities.</div>
+        <a href="#" class="scheme-link">Learn more &#8594;</a>
+      </div>
+    </div>
+
+    <h2 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin:28px 0 14px;">State-Level Disability Pensions</h2>
+    <div class="section-card">
+      <p style="font-size:0.88rem;color:var(--slate);margin-bottom:14px;">Most Indian states offer disability pensions ranging from Rs 300–3,000/month. Select your state to find relevant schemes:</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <label for="state-select" style="font-weight:600;font-size:0.88rem;">Select State:</label>
+        <select id="state-select" class="form-select" style="width:220px;" onchange="showStateScheme(this.value)" aria-label="Select your state to view schemes">
+          <option value="">-- Choose State --</option>
+          <option value="bihar">Bihar</option>
+          <option value="up">Uttar Pradesh</option>
+          <option value="mh">Maharashtra</option>
+          <option value="ka">Karnataka</option>
+          <option value="tn">Tamil Nadu</option>
+          <option value="dl">Delhi</option>
+          <option value="wb">West Bengal</option>
+          <option value="rj">Rajasthan</option>
+        </select>
+        <div id="state-result" role="status" aria-live="polite" style="font-size:0.85rem;color:var(--slate);"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-portals" class="page" role="main" aria-label="Government Portals page">
+  <div class="section-wrap">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> &rsaquo; Official Government Portals</div>
+    <h1 class="section-title" style="font-size:1.8rem;margin-bottom:6px;">Official Government Portals</h1>
+    <p class="section-subtitle">Direct links to key government websites and services for PwDs in India</p>
+
+    <div class="portal-grid">
+      <a class="portal-card" href="https://www.swavlambancard.gov.in" target="_blank" rel="noopener" aria-label="UDID Portal - Apply for Unique Disability ID">
+        <div class="portal-logo" aria-hidden="true">&#128203;</div>
+        <div>
+          <div class="portal-name">UDID Portal</div>
+          <div class="portal-url">swavlambancard.gov.in</div>
+          <div class="portal-desc">Apply for Unique Disability ID card online</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://disabilityaffairs.gov.in" target="_blank" rel="noopener" aria-label="DEPWD - Department of Empowerment of PwDs">
+        <div class="portal-logo" aria-hidden="true">&#127963;</div>
+        <div>
+          <div class="portal-name">DEPwD — Disability Affairs</div>
+          <div class="portal-url">disabilityaffairs.gov.in</div>
+          <div class="portal-desc">Central ministry for PwD empowerment</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://www.thenationaltrust.gov.in" target="_blank" rel="noopener" aria-label="National Trust for Autism, Cerebral Palsy and Intellectual Disabilities">
+        <div class="portal-logo" aria-hidden="true">&#128736;</div>
+        <div>
+          <div class="portal-name">National Trust</div>
+          <div class="portal-url">thenationaltrust.gov.in</div>
+          <div class="portal-desc">Autism, CP, intellectual & multiple disabilities</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://www.nhfdc.nic.in" target="_blank" rel="noopener" aria-label="NHFDC - National Handicapped Finance and Development Corporation">
+        <div class="portal-logo" aria-hidden="true">&#128176;</div>
+        <div>
+          <div class="portal-name">NHFDC</div>
+          <div class="portal-url">nhfdc.nic.in</div>
+          <div class="portal-desc">Loans and financial assistance for PwDs</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://www.rehabilitationcouncil.nic.in" target="_blank" rel="noopener" aria-label="Rehabilitation Council of India">
+        <div class="portal-logo" aria-hidden="true">&#127891;</div>
+        <div>
+          <div class="portal-name">Rehab Council of India</div>
+          <div class="portal-url">rehabilitationcouncil.nic.in</div>
+          <div class="portal-desc">Professional standards in disability services</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://scholarships.gov.in" target="_blank" rel="noopener" aria-label="National Scholarship Portal">
+        <div class="portal-logo" aria-hidden="true">&#127979;</div>
+        <div>
+          <div class="portal-name">National Scholarship Portal</div>
+          <div class="portal-url">scholarships.gov.in</div>
+          <div class="portal-desc">Apply for disability scholarships online</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://www.nivh.edu.in" target="_blank" rel="noopener" aria-label="National Institute of Visually Handicapped">
+        <div class="portal-logo" aria-hidden="true">&#128065;</div>
+        <div>
+          <div class="portal-name">NIVH Dehradun</div>
+          <div class="portal-url">nivh.edu.in</div>
+          <div class="portal-desc">National Institute for Visual Impairment</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://ali.nic.in" target="_blank" rel="noopener" aria-label="Ali Yavar Jung National Institute for Deaf">
+        <div class="portal-logo" aria-hidden="true">&#128263;</div>
+        <div>
+          <div class="portal-name">AYJNIHH Mumbai</div>
+          <div class="portal-url">ali.nic.in</div>
+          <div class="portal-desc">National Institute for Hearing Impairment</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://nidm.gov.in" target="_blank" rel="noopener" aria-label="NIMH - National Institute for Mental Health">
+        <div class="portal-logo" aria-hidden="true">&#129504;</div>
+        <div>
+          <div class="portal-name">NIMHANS Bengaluru</div>
+          <div class="portal-url">nimhans.ac.in</div>
+          <div class="portal-desc">Premier mental health and neurosciences institute</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://www.indianrailways.gov.in" target="_blank" rel="noopener" aria-label="Indian Railways - Concessions for PwDs">
+        <div class="portal-logo" aria-hidden="true">&#128649;</div>
+        <div>
+          <div class="portal-name">Indian Railways</div>
+          <div class="portal-url">indianrailways.gov.in</div>
+          <div class="portal-desc">75% concession in train fares for PwDs</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://www.incometax.gov.in" target="_blank" rel="noopener" aria-label="Income Tax - Disability deductions under 80U and 80DD">
+        <div class="portal-logo" aria-hidden="true">&#128200;</div>
+        <div>
+          <div class="portal-name">Income Tax Department</div>
+          <div class="portal-url">incometax.gov.in</div>
+          <div class="portal-desc">Tax benefits under Sec 80U, 80DD, 80DDB</div>
+        </div>
+      </a>
+      <a class="portal-card" href="https://accessible.gov.in" target="_blank" rel="noopener" aria-label="Accessible India - Sugamya Bharat Campaign">
+        <div class="portal-logo" aria-hidden="true">&#127968;</div>
+        <div>
+          <div class="portal-name">Accessible India Campaign</div>
+          <div class="portal-url">accessible.gov.in</div>
+          <div class="portal-desc">Sugamya Bharat — accessibility for all</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div id="page-education" class="page" role="main" aria-label="Education and Employment page">
+  <div class="section-wrap">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> &rsaquo; Education &amp; Employment</div>
+    <h1 class="section-title" style="font-size:1.8rem;margin-bottom:6px;">Education &amp; Employment</h1>
+    <p class="section-subtitle">Rights, opportunities and support for PwDs in learning and livelihood</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;">
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-icon orange" aria-hidden="true">&#127979;</div>
+          <div><div class="card-title">Inclusive Education</div></div>
+        </div>
+        <ul style="padding-left:18px;font-size:0.85rem;color:var(--slate);line-height:2;">
+          <li>Free and compulsory education up to age 18 (RPwD Act, Sec 16)</li>
+          <li>Sarva Shiksha Abhiyan / SAMAGRA Shiksha — inclusive classrooms</li>
+          <li>Special schools under state governments</li>
+          <li>Extra time (25–50%) in board and competitive exams</li>
+          <li>Scribe/writer provision for those with arm/visual disabilities</li>
+          <li>Exemption from third language in many state boards</li>
+          <li>Home-based education for children who cannot attend school</li>
+        </ul>
+      </div>
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-icon green" aria-hidden="true">&#128203;</div>
+          <div><div class="card-title">Scholarships &amp; Fellowships</div></div>
+        </div>
+        <ul style="padding-left:18px;font-size:0.85rem;color:var(--slate);line-height:2;">
+          <li>Pre-Matric Scholarship — Class 9–10 (DEPwD)</li>
+          <li>Post-Matric Scholarship — Class 11 to PhD (DEPwD)</li>
+          <li>Top Class Education — elite institutions (NIT, IIT, AIIMS)</li>
+          <li>National Fellowship for PwDs — UGC (Rs 31,000/month)</li>
+          <li>AICTE scholarships for technical education</li>
+          <li>Rajiv Gandhi National Fellowship (SC/ST PwDs)</li>
+          <li>State-specific scholarships — check your state portal</li>
+        </ul>
+      </div>
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-icon blue" aria-hidden="true">&#128722;</div>
+          <div><div class="card-title">Employment &amp; Reservation</div></div>
+        </div>
+        <ul style="padding-left:18px;font-size:0.85rem;color:var(--slate);line-height:2;">
+          <li><strong>4% reservation</strong> in all central government jobs</li>
+          <li>Age relaxation: 10 yrs (General), 13 yrs (OBC), 15 yrs (SC/ST)</li>
+          <li>National Career Service Portal (NCSP) for disability jobs</li>
+          <li>Special Employment Exchanges for PwDs</li>
+          <li>UPSC and SSC — accessibility accommodations available</li>
+          <li>DDRS scheme — NGO-run vocational training programmes</li>
+          <li>Startup India — priority for PwD entrepreneurs</li>
+        </ul>
+      </div>
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-icon purple" aria-hidden="true">&#127775;</div>
+          <div><div class="card-title">Competitive Exam Accommodations</div></div>
+        </div>
+        <ul style="padding-left:18px;font-size:0.85rem;color:var(--slate);line-height:2;">
+          <li>UPSC — scribe, extra time, accessible centres</li>
+          <li>SSC — 20 extra minutes per hour for VI/OH candidates</li>
+          <li>NEET — compensatory time, scribe</li>
+          <li>JEE — accessibility facilities at exam centres</li>
+          <li>UGC NET — scribe and extra time</li>
+          <li>Bank PO/Clerk — SBI, RBI, IBPS accommodate PwDs</li>
+          <li>Railway exams — Grade 1–4 accommodations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-health" class="page" role="main" aria-label="Health and Rehabilitation page">
+  <div class="section-wrap">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> &rsaquo; Health &amp; Rehabilitation</div>
+    <h1 class="section-title" style="font-size:1.8rem;margin-bottom:6px;">Health &amp; Rehabilitation</h1>
+    <p class="section-subtitle">Government health services, assistive technology and early intervention resources</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:28px;">
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-icon orange" aria-hidden="true">&#127973;</div>
+          <div><div class="card-title">National Institutes of Disability</div></div>
+        </div>
+        <p style="font-size:0.84rem;color:var(--slate);">India has seven National Institutes under DEPwD providing specialised rehabilitation, research and training:</p>
+        <ul style="padding-left:18px;font-size:0.83rem;color:var(--slate);line-height:2;margin-top:8px;">
+          <li>NIMH Secunderabad — Intellectual Disabilities</li>
+          <li>NIVH Dehradun — Visual Impairment</li>
+          <li>AYJNIHH Mumbai — Hearing Impairment</li>
+          <li>NIOH Kolkata — Locomotor Disability</li>
+          <li>NIEPID Secunderabad — Autism, CP, Deaf-Blind</li>
+          <li>NIEPVD Cuttack — Multiple Disabilities</li>
+          <li>SVNIRTAR Cuttack — Physical Rehabilitation</li>
+        </ul>
+      </div>
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-icon green" aria-hidden="true">&#129302;</div>
+          <div><div class="card-title">Assistive Technology &amp; Devices</div></div>
+        </div>
+        <ul style="padding-left:18px;font-size:0.83rem;color:var(--slate);line-height:2;">
+          <li><strong>Screen readers:</strong> NVDA (free), JAWS, Supernova, Orca (Linux)</li>
+          <li><strong>Mobility aids:</strong> Wheelchairs, crutches, prosthetics (free via ADIP)</li>
+          <li><strong>Hearing:</strong> Hearing aids, cochlear implants (government subsidised)</li>
+          <li><strong>Visual:</strong> Braille kits, white canes, magnifiers</li>
+          <li><strong>AAC devices:</strong> Augmentative communication for non-verbal PwDs</li>
+          <li><strong>Software:</strong> Dragon Naturally Speaking (voice), OpenDyslexic font</li>
+        </ul>
+      </div>
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-icon blue" aria-hidden="true">&#129504;</div>
+          <div><div class="card-title">Mental Health Services</div></div>
+        </div>
+        <ul style="padding-left:18px;font-size:0.83rem;color:var(--slate);line-height:2;">
+          <li>National Mental Health Programme (NMHP) — free services in district hospitals</li>
+          <li>NIMHANS Bengaluru — premier referral centre</li>
+          <li>Mental Health Act, 2017 — rights of persons with mental illness</li>
+          <li>iCall (TISS) — free counselling helpline: 9152987821</li>
+          <li>Vandrevala Foundation Helpline: 1860-2662-345</li>
+          <li>State mental hospitals — free inpatient services</li>
+        </ul>
+      </div>
+      <div class="section-card">
+        <div class="card-header">
+          <div class="card-icon purple" aria-hidden="true">&#128118;</div>
+          <div><div class="card-title">Early Intervention &amp; Children</div></div>
+        </div>
+        <ul style="padding-left:18px;font-size:0.83rem;color:var(--slate);line-height:2;">
+          <li>Early detection through Rashtriya Bal Swasthya Karyakram (RBSK)</li>
+          <li>Free screening of children 0–18 years at district hospitals</li>
+          <li>Cochlear implant programme for children with hearing loss</li>
+          <li>NPPCD — National Programme for Prevention &amp; Control of Deafness</li>
+          <li>UIDAI — disability can be noted in Aadhaar for service access</li>
+          <li>Anganwadi centres — early childhood support including disability</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-card" style="background:var(--saffron-light);border-color:#e0c4a0;">
+      <h2 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:10px;">Niramaya Health Insurance (National Trust)</h2>
+      <p style="font-size:0.85rem;color:var(--slate);">Niramaya provides health insurance for persons with Autism, Cerebral Palsy, Mental Retardation and Multiple Disabilities. Coverage up to <strong>Rs 1 lakh/year</strong>. Annual premium: Rs 250 (BPL) or Rs 500 (others). Available through the National Trust's local level committee network.</p>
+      <div style="margin-top:10px;"><span class="tag">Autism</span><span class="tag">Cerebral Palsy</span><span class="tag green">Rs 1 Lakh Cover</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-news" class="page" role="main" aria-label="News and Updates page">
+  <div class="section-wrap">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> &rsaquo; News &amp; Updates</div>
+    <h1 class="section-title" style="font-size:1.8rem;margin-bottom:6px;">News &amp; Policy Updates</h1>
+    <p class="section-subtitle">Latest developments in disability rights, schemes and judicial pronouncements in India</p>
+
+    <div style="max-width:720px;">
+      <div class="news-item">
+        <div class="news-date">April 2025</div>
+        <div class="news-title">Supreme Court directs states to implement RPwD Act accessibility norms in all public buildings within 12 months</div>
+        <span class="news-tag">Court Judgment</span>
+      </div>
+      <div class="news-item">
+        <div class="news-date">March 2025</div>
+        <div class="news-title">DEPwD enhances ADIP scheme coverage — monthly income limit raised to Rs 30,000</div>
+        <span class="news-tag">Scheme Update</span>
+      </div>
+      <div class="news-item">
+        <div class="news-date">February 2025</div>
+        <div class="news-title">UGC mandates all universities to set up Equal Opportunity Cells for students with disabilities by June 2025</div>
+        <span class="news-tag">Education Policy</span>
+      </div>
+      <div class="news-item">
+        <div class="news-date">January 2025</div>
+        <div class="news-title">UPSC announces enhanced accessibility protocol — AI-assisted scribe allocation from 2025 examinations</div>
+        <span class="news-tag">Exam Accommodation</span>
+      </div>
+      <div class="news-item">
+        <div class="news-date">December 2024</div>
+        <div class="news-title">National Trust launches Gharaunda 2.0 — expanded group home network for adults with intellectual disabilities</div>
+        <span class="news-tag">Scheme Launch</span>
+      </div>
+      <div class="news-item">
+        <div class="news-date">November 2024</div>
+        <div class="news-title">Bombay High Court rules that denial of reasonable accommodation in workplaces constitutes discrimination under RPwD Act</div>
+        <span class="news-tag">Court Judgment</span>
+      </div>
+      <div class="news-item">
+        <div class="news-date">October 2024</div>
+        <div class="news-title">MSDE integrates disability inclusion module in all PMKVY 4.0 training programmes</div>
+        <span class="news-tag">Skill Development</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-contact" class="page" role="main" aria-label="Contact and Support page">
+  <div class="section-wrap">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a> &rsaquo; Contact &amp; Support</div>
+    <h1 class="section-title" style="font-size:1.8rem;margin-bottom:6px;">Contact &amp; Support</h1>
+    <p class="section-subtitle">Helplines, grievance portals and feedback form</p>
+
+    <h2 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:14px;">National Helplines</h2>
+    <div class="helpline-grid" style="margin-bottom:28px;">
+      <div class="helpline-card">
+        <div>
+          <div class="helpline-number">1800-111-555</div>
+          <div class="helpline-name">DEPwD Helpline</div>
+          <div class="helpline-desc">Dept. of Empowerment of PwDs — Toll-free</div>
+        </div>
+      </div>
+      <div class="helpline-card">
+        <div>
+          <div class="helpline-number">14566</div>
+          <div class="helpline-name">Accessible India Helpline</div>
+          <div class="helpline-desc">Sugamya Bharat accessibility complaints</div>
+        </div>
+      </div>
+      <div class="helpline-card">
+        <div>
+          <div class="helpline-number">1800-599-0019</div>
+          <div class="helpline-name">NIMHANS Mental Health</div>
+          <div class="helpline-desc">Free mental health support, 24x7</div>
+        </div>
+      </div>
+      <div class="helpline-card">
+        <div>
+          <div class="helpline-number">9152987821</div>
+          <div class="helpline-name">iCall (TISS)</div>
+          <div class="helpline-desc">Psychosocial support helpline</div>
+        </div>
+      </div>
+      <div class="helpline-card">
+        <div>
+          <div class="helpline-number">1800-116-000</div>
+          <div class="helpline-name">CHILDLINE</div>
+          <div class="helpline-desc">Children with disabilities in distress</div>
+        </div>
+      </div>
+      <div class="helpline-card">
+        <div>
+          <div class="helpline-number">1800-180-1104</div>
+          <div class="helpline-name">National Trust Helpline</div>
+          <div class="helpline-desc">Autism, CP, multiple disabilities support</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:14px;">Grievance Redressal</h2>
+    <div class="scheme-grid" style="margin-bottom:28px;">
+      <div class="scheme-card">
+        <div class="scheme-name">CPGRAMS</div>
+        <div class="scheme-desc">Centralised Public Grievance Redress and Monitoring System — file complaints against any government department. Available in Hindi and English.</div>
+        <a href="https://pgportal.gov.in" class="scheme-link" target="_blank" rel="noopener">pgportal.gov.in &#8594;</a>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">State Disability Commissioner</div>
+        <div class="scheme-desc">File disability-specific complaints related to discrimination, denied accommodations or implementation issues with the State Commissioner for Persons with Disabilities in your state.</div>
+        <a href="#" class="scheme-link">Find your state commissioner &#8594;</a>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">Chief Commissioner for PwDs</div>
+        <div class="scheme-desc">The national authority for grievances related to RPwD Act. Can be approached directly if state-level redressal is insufficient.</div>
+        <a href="https://ccd.nic.in" class="scheme-link" target="_blank" rel="noopener">ccd.nic.in &#8594;</a>
+      </div>
+    </div>
+
+    <h2 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:14px;">Send us a message</h2>
+    <div class="contact-form-wrap">
+      <div id="contact-form" aria-label="Contact form">
+        <div class="form-group">
+          <label class="form-label" for="cf-name">Your Name <span aria-label="required" style="color:var(--saffron);">*</span></label>
+          <input class="form-input" id="cf-name" type="text" placeholder="Full name" autocomplete="name" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-email">Email Address <span aria-label="required" style="color:var(--saffron);">*</span></label>
+          <input class="form-input" id="cf-email" type="email" placeholder="your@email.com" autocomplete="email" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-type">Type of Query</label>
+          <select class="form-select" id="cf-type" aria-label="Select query type">
+            <option value="">-- Select --</option>
+            <option>Scheme Information</option>
+            <option>Legal Query</option>
+            <option>UDID Assistance</option>
+            <option>Grievance Support</option>
+            <option>Resource Request</option>
+            <option>Feedback</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-msg">Your Message <span aria-label="required" style="color:var(--saffron);">*</span></label>
+          <textarea class="form-textarea" id="cf-msg" placeholder="Describe your query or feedback..." required aria-required="true"></textarea>
+        </div>
+        <button class="btn-primary" onclick="submitForm()" aria-label="Submit contact form">Send Message</button>
+      </div>
+      <div class="form-submitted" id="form-success" role="alert" aria-live="polite">
+        <strong style="color:var(--green-india);font-size:1rem;">&#10003; Message received — thank you!</strong>
+        <p style="font-size:0.85rem;color:var(--slate);margin-top:8px;">We aim to respond within 2 working days. For urgent disability emergencies, please call the helplines listed above.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <strong>Saffron And Synapse</strong>
+        <p>A one-stop digital platform for Persons with Disabilities, caregivers, educators and policymakers in India. Empowering abilities through rights-based information.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('about')">About Us</a>
+        <a href="#" onclick="showPage('disabilities')">Disability Types</a>
+        <a href="#" onclick="showPage('rights')">Rights &amp; Laws</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#" onclick="showPage('schemes')">Schemes</a>
+        <a href="#" onclick="showPage('portals')">Gov. Portals</a>
+        <a href="#" onclick="showPage('education')">Education</a>
+        <a href="#" onclick="showPage('health')">Health</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="#" onclick="showPage('news')">News &amp; Updates</a>
+        <a href="#" onclick="showPage('contact')">Contact</a>
+        <a href="#" onclick="showPage('contact')">Helplines</a>
+        <a href="#">Accessibility Statement</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Saffron And Synapse &copy; 2025 &mdash; All information for awareness only; verify with official sources.</span>
+      <span>WCAG 2.1 AA Compliant &bull; RPwD Act 2016 Guided &bull; Made with care in India &#127470;&#127475;</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+var currentPage = 'home';
+var fontSize = 16;
+var speechSynth = window.speechSynthesis;
+var speaking = false;
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  var el = document.getElementById('page-' + id);
+  if (el) { el.classList.add('active'); el.scrollIntoView({behavior:'smooth',block:'start'}); }
+  document.querySelectorAll('.nav-links a').forEach(function(a){ a.classList.remove('active'); a.removeAttribute('aria-current'); });
+  var nav = document.getElementById('nav-' + id);
+  if (nav) { nav.classList.add('active'); nav.setAttribute('aria-current','page'); }
+  currentPage = id;
+  var nl = document.getElementById('nav-links');
+  nl.classList.remove('open');
+  document.getElementById('hamburger').setAttribute('aria-expanded','false');
+}
+
+function toggleAcc(btn) {
+  var expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', !expanded);
+  var body = btn.nextElementSibling;
+  body.classList.toggle('open', !expanded);
+}
+
+function changeFontSize(delta) {
+  fontSize = Math.max(12, Math.min(22, fontSize + delta * 2));
+  document.getElementById('root-wrap').style.fontSize = fontSize + 'px';
+}
+
+function toggleContrast() {
+  var wrap = document.getElementById('root-wrap');
+  var on = wrap.getAttribute('data-hc') === 'on';
+  wrap.setAttribute('data-hc', on ? 'off' : 'on');
+  document.getElementById('hc-btn').textContent = on ? 'High Contrast' : 'Normal Contrast';
+}
+
+function setLang(lang) {
+  document.getElementById('root-wrap').setAttribute('data-lang', lang);
+  document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+  document.getElementById('btn-hi').setAttribute('aria-pressed', lang === 'hi');
+}
+
+function toggleMenu() {
+  var nl = document.getElementById('nav-links');
+  var hb = document.getElementById('hamburger');
+  var open = nl.classList.toggle('open');
+  hb.setAttribute('aria-expanded', open);
+}
+
+function readPageAloud() {
+  if (!speechSynth) { alert('Text-to-speech not supported in this browser.'); return; }
+  if (speaking) { speechSynth.cancel(); speaking = false; return; }
+  var page = document.getElementById('page-' + currentPage);
+  var text = page ? page.innerText.replace(/\s+/g,' ') : '';
+  var utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'en-IN'; utt.rate = 0.95;
+  utt.onend = function(){ speaking = false; };
+  speechSynth.speak(utt);
+  speaking = true;
+}
+
+function showStateScheme(val) {
+  var data = {
+    'bihar': 'Bihar: Mukhyamantri Nihshakt Jankalyan Yojana — Rs 400/month disability pension. Apply at Block Office with UDID/disability certificate.',
+    'up': 'Uttar Pradesh: UP Divyang Pension Scheme — Rs 500/month for PwDs with 40%+ disability. Apply online at sspy-up.gov.in.',
+    'mh': 'Maharashtra: Sanjay Gandhi Niradhar Anudan Yojana — Rs 600/month for those with 40%+ disability. Apply at district social welfare office.',
+    'ka': 'Karnataka: Sandhya Suraksha Yojana — Rs 1,000/month for disabled persons. Apply at Taluk Social Welfare Office.',
+    'tn': 'Tamil Nadu: Chief Minister\'s Disabled Persons Welfare Scheme — Rs 1,500/month pension + free assistive devices. Apply at district office.',
+    'dl': 'Delhi: Disability Pension Scheme — Rs 2,500/month for PwDs with 40%+ disability. Apply at District Social Welfare Office or online at edistrict.delhigovt.nic.in.',
+    'wb': 'West Bengal: Manabik Pension — Rs 1,000/month. Apply through local gram panchayat or municipality.',
+    'rj': 'Rajasthan: Palanhar Scheme / SJE Disability Pension — Rs 750/month for 40–79%, Rs 1,500/month for 80%+. Apply at SJE office.'
+  };
+  var r = document.getElementById('state-result');
+  r.innerHTML = val && data[val] ? '<div style="background:var(--green-light);border:1.5px solid #b8e0c8;border-radius:8px;padding:12px;margin-top:10px;font-size:0.84rem;color:var(--slate);">' + data[val] + '</div>' : '';
+}
+
+function submitForm() {
+  var n = document.getElementById('cf-name').value.trim();
+  var e = document.getElementById('cf-email').value.trim();
+  var m = document.getElementById('cf-msg').value.trim();
+  if (!n || !e || !m) { alert('Please fill all required fields (Name, Email, Message).'); return; }
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('form-success').classList.add('visible');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Tab') {
+    document.body.classList.add('keyboard-nav');
+  }
+});
+
+window.addEventListener('scroll', function(){}, {passive: true});
+</script>
